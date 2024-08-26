@@ -1,0 +1,25 @@
+{
+    "name": "igoroguraramos/asaas-integracao",
+    "description": "Integracao com a Asaas",
+    "keywords"   : ["Asaas", "Boleto"],
+    "homepage"   : "https://github.com/igoroguraramos",
+    "license"    : "MIT",
+    "autoload": {
+        "psr-4": {
+            "AsaasIntegracao\\": "src/",
+            "AsaasIntegracao\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Igor Ogura Ramos",
+            "email": "igoroguraramos@hotmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
