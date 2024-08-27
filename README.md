@@ -14,6 +14,7 @@ $config = new Config(
         "accessToken" => '{{Token Gerado na Asaas}}',
         "baseUri" => "https://sandbox.asaas.com",
         "ssl" => false //setar apenas se for local para testes
+        "production" => false //Por padrão é produção, para ambiente de teste adicionar esse atributo
     ]
 );
 $asaas = new Asaas($config);

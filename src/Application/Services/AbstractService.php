@@ -21,7 +21,7 @@ abstract class AbstractService
 
     public function __construct(Config $config, $pathApi)
     {
-        $this->pathApi = "/api/$config->version/$pathApi";
+        $this->pathApi = "$config->pathUrl/$pathApi";
         
         $this->client = new Client(
             [
