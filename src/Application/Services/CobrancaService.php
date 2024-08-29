@@ -9,7 +9,8 @@ class CobrancaService extends AbstractService
 {
     public function __construct(Config $config)
     {
-        parent::__construct($config, "payments");
+        parent::__construct($config);
+        $this->setPathUrl("payments");
     }
 
     /**

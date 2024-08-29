@@ -34,7 +34,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with('/api/v3/payments', 'GET', [])
+            ->with('/', 'GET', [])
             ->willReturn($response);
 
         $result = $this->subject->index();
@@ -56,7 +56,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with('/api/v3/payments', 'POST', ['form_params' => $payload])
+            ->with('/', 'POST', ['form_params' => $payload])
             ->willReturn($response);
 
         $actual = $this->subject->create($payload);
@@ -78,7 +78,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with("/api/v3/payments/$id", 'GET', [])
+            ->with("/$id", 'GET', [])
             ->willReturn($response);
 
         $actual = $this->subject->show($id);
@@ -101,7 +101,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with("/api/v3/payments/$id", 'PUT', ['json' => $payload])
+            ->with("/$id", 'PUT', ['json' => $payload])
             ->willReturn($response);
 
         $actual = $this->subject->update($id, $payload);
@@ -123,7 +123,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with("/api/v3/payments/$id", 'DELETE', [])
+            ->with("/$id", 'DELETE', [])
             ->willReturn($response);
 
         $result = $this->subject->delete($id);
@@ -143,7 +143,7 @@ class CobrancaServiceTest extends TestCase
 
         $this->subject->expects($this->once())
             ->method('api')
-            ->with("/api/v3/payments/$id/restore", 'POST', [])
+            ->with("/$id/restore", 'POST', [])
             ->willReturn($response);
 
         $result = $this->subject->restore($id);

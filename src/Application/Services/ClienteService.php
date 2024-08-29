@@ -9,7 +9,8 @@ class ClienteService extends AbstractService
 {
     public function __construct(Config $config)
     {
-        parent::__construct($config, "customers");
+        parent::__construct($config);
+        $this->setPathUrl("customers");
     }
 
     /**
