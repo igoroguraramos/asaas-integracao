@@ -52,6 +52,8 @@ $cliente->restore('cus_G7Dvo4iphUNk');
 ```php
 use AsaasIntegracao\Domain\Enums\BillingType;
 
+$cobranca = $asaas->cobranca();
+
 // Listar cobranças
 $cobranca->index();
 
@@ -82,6 +84,13 @@ $cobranca->getLinhaDigitavel('pay_G7Dvo4iphUNk');
 
 // Obter QR Code para pagamentos via Pix
 $cobranca->getQrCode('pay_G7Dvo4iphUNk');
+```
+
+## Generic
+```php
+$clientes = $asaas->api("/customers"); //Listar Clientes
+$cobrancas = $asaas->api("/payments"); //Listar Cobranca
+$newCliente = $asaas->api("/customers", "POST", ['name' => 'John Doe','cpfCnpj' => '00000000100']); //Criar Novo Cliente
 ```
 
 # Contribuição
