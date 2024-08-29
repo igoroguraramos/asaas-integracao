@@ -27,11 +27,11 @@ class CobrancaService extends AbstractService
 
     public function getLinhaDigitavel($id)
     {
-        return $this->api("$this->pathApi/$id/identificationField");
+        return json_decode($this->api("/$id/identificationField"), true);
     }
     
     public function getQrCode($id)
     {
-        return $this->api("$this->pathApi/$id/pixQrCode");
+        return json_decode($this->api("/$id/pixQrCode"), true);
     }
 }
