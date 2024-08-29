@@ -2,77 +2,9 @@
 
 namespace AsaasIntegracao\Application\Services;
 
-use Exception;
-use GuzzleHttp\Client;
-use AsaasIntegracao\Domain\Config;
-use AsaasIntegracao\Domain\Entities\AbstractEntity;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\RequestException;
-
-abstract class AbstractService
+abstract class AbstractService extends Service
 {
     abstract protected function createEntityFromResponse(string $response);
-
-    protected $pathApi;
-    protected $client;
-    private const JSON_CONTENT_TYPE = 'Content-Type: application/json';
-
-    public function __construct(Config $config, $pathApi)
-    {
-        $this->pathApi = "$config->pathUrl/$pathApi";
-        
-        $this->client = new Client(
-            [
-                "base_uri" => $config->baseUri,
-                "verify" => $config->ssl,
-                "headers" => [
-                    'Content-Type' => 'application/json',
-                    "User-Agent" => $config->userAgent,
-                    "access_token" => $config->accessToken,
-                ]
-            ]
-        );
-    }
-
-    public function api($url, $method = "GET", $options = [])
-    {
-        $result = null;
-
-        try {
-            $response = $this->client->request($method, $url, $options);
-
-            $result = $response->getBody()->getContents();
-        } catch (ClientException $e) {
-            header(self::JSON_CONTENT_TYPE, true, $e->getCode());
-            $result = json_encode([
-                "error" => $e->getMessage()
-            ]);
-        } catch (ServerException $e) {
-            header(self::JSON_CONTENT_TYPE, true, $e->getCode());
-            $result = json_encode([
-                "error" => $e->getMessage()
-            ]);
-        } catch (ConnectException $e) {
-            header(self::JSON_CONTENT_TYPE, true, $e->getCode());
-            $result = json_encode([
-                "error" => $e->getMessage()
-            ]);
-        } catch (RequestException $e) {
-            header(self::JSON_CONTENT_TYPE, true, $e->getCode());
-            $result = json_encode([
-                "error" => $e->getMessage()
-            ]);
-        } catch (Exception $e) {
-            header(self::JSON_CONTENT_TYPE, true, $e->getCode());
-            $result = json_encode([
-                "error" => $e->getMessage()
-            ]);
-        }
-
-        return $result;
-    }
 
     /**
      * Listar
@@ -81,7 +13,7 @@ abstract class AbstractService
      */
     public function index(): array
     {
-        $response = $this->api($this->pathApi);
+        $response = $this->api();
         return json_decode($response, true);
     }
 
@@ -92,7 +24,7 @@ abstract class AbstractService
      */
     public function create(array $payload)
     {
-        $response = $this->api($this->pathApi, "POST", ["form_params" => $payload]);
+        $response = $this->api("/", "POST", ["form_params" => $payload]);
         return $this->createEntityFromResponse($response);
     }
 
@@ -103,7 +35,7 @@ abstract class AbstractService
      */
     public function show(string $id)
     {
-        $response = $this->api("$this->pathApi/$id");
+        $response = $this->api("/$id");
         return $this->createEntityFromResponse($response);
     }
 
@@ -115,7 +47,7 @@ abstract class AbstractService
      */
     public function update(string $id, array $payload)
     {
-        $response = $this->api("$this->pathApi/$id", "PUT", ["json" => $payload]);
+        $response = $this->api("/$id", "PUT", ["json" => $payload]);
         return $this->createEntityFromResponse($response);
     }
 
@@ -127,7 +59,7 @@ abstract class AbstractService
      */
     public function delete(string $id): bool
     {
-        return $this->api("$this->pathApi/$id", "DELETE");
+        return $this->api("/$id", "DELETE");
     }
 
     /**
@@ -138,6 +70,6 @@ abstract class AbstractService
      */
     public function restore(string $id): bool
     {
-        return $this->api("$this->pathApi/$id/restore", "POST");
+        return $this->api("/$id/restore", "POST");
     }
 }
