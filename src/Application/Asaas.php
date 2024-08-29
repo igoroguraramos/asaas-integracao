@@ -20,9 +20,16 @@ class Asaas
         $this->service = new Service($config);
     }
 
-    public function api($pathUrl)
+    public function api($pathUrl, $method = "GET", $payload = [])
     {
-        $response = $this->service->api($pathUrl);
+        $options = [];
+
+        if($method !== "GET") {
+            $keyArray = $method === "POST" ? "form_params" : "json";
+            $options = [$keyArray => $payload];
+        }
+
+        $response = $this->service->api($pathUrl, $method, $options);
         return json_decode($response, true);
     }
 
