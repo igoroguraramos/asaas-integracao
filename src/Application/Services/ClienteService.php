@@ -21,7 +21,7 @@ class ClienteService extends AbstractService
      */
     protected function createEntityFromResponse(string $response): Cliente
     {
-        $data = json_decode($response, true);
+        $data = $this->handleApiResponse($response);
         return new Cliente($data);
     }
 }

@@ -21,7 +21,7 @@ class CobrancaService extends AbstractService
      */
     protected function createEntityFromResponse(string $response): Cobranca
     {
-        $data = json_decode($response, true);
+        $data = $this->handleApiResponse($response);
         return new Cobranca($data);
     }
 
